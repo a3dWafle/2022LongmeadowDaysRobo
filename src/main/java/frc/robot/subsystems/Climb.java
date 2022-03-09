@@ -38,7 +38,7 @@ public class Climb extends SubsystemBase {
 
   public void setBothSpeed(double speed){
       leftClimb.set(speed);
-      rightClimb.set(speed);
+      rightClimb.set(-speed);
   }
 
   public boolean getLeftSwitch(){
