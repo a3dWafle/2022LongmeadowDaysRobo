@@ -21,6 +21,7 @@ import frc.robot.commands.PostLimelightValues;
 import frc.robot.commands.PrintColorSensor;
 import frc.robot.commands.RaiseLeftHook;
 import frc.robot.commands.RaiseRightHook;
+import frc.robot.commands.SetBothHooksSpeed;
 import frc.robot.commands.SetHoodPosition;
 import frc.robot.commands.SetHoodSpeed;
 import frc.robot.commands.SetIntakeSpeed;
@@ -152,15 +153,12 @@ public class RobotContainer {
 
 
     JoystickButton button3= new JoystickButton(xbox, XboxController.Button.kLeftBumper.value);
-    //button3.whenHeld(new DriveStraight(m_drive, 0.25));
-    button3.whenHeld(new SetLeftClimbSpeed(climb, 0.3));
-    button3.whenReleased(new SetLeftClimbSpeed(climb, 0));
+    button3.whenHeld(new SetBothHooksSpeed(climb, -0.3));
+    button3.whenReleased(new SetBothHooksSpeed(climb, 0));
 
     JoystickButton button4= new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
-    //button4.whenHeld(new TrackTape(m_drive, vision));
-    button4.whenHeld(new SetLeftClimbSpeed(climb, -0.3));
-    button4.whenReleased(new SetLeftClimbSpeed(climb, 0));
-
+    button4.whenHeld(new SetBothHooksSpeed(climb, 0.3));
+    button4.whenReleased(new SetBothHooksSpeed(climb, 0));
     
 
 
