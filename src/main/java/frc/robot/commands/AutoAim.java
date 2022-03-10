@@ -23,6 +23,7 @@ public class AutoAim extends CommandBase {
   double turnPower;
   double transPower;
   //double area;
+  double speed;
 
   public AutoAim(Shooter m_shooter, Hood h, Vision v, DriveTrain m_drive) {
     vision = v;
@@ -38,22 +39,24 @@ public class AutoAim extends CommandBase {
 
   @Override
   public void initialize() {
-    vision.setLedOn(true);
-    /*
-    double speed = vision.calculateShooterSpeed();
-    if(speed <= 0.55){
+    //vision.setLedOn(true);
+    
+    speed = vision.calculateShooterSpeed();
+    if(speed<=0.6){
       shooter.setSpeed(speed);
-    }
 
-    if(vision.getDistance()<=Constants.closeDistance){
-        hood.setHoodPosition(true);
     }
-*/
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //System.out.println(vision.distance);
+
+    System.out.println(speed);
+    System.out.println(vision.distanceInFeet);
+
     error = vision.getXOffset();
     turnPower = kP*error;
 
@@ -76,7 +79,7 @@ public class AutoAim extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    vision.setLedOn(false);
+    //vision.setLedOn(false);
   }
 
   // Returns true when the command should end.

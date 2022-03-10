@@ -21,17 +21,19 @@ public NetworkTableEntry ta = table.getEntry("ta");
 
 public NetworkTableEntry ledMode = table.getEntry("ledMode");
 
+public double distanceInFeet;
+public double distance;
 
   public Vision() {
-      ledMode.setNumber(1);//Set led off
+      //ledMode.setNumber(3);//Set led off
   }
 
   public void setLedOn(boolean on){
       if(on){
-        ledMode.setNumber(3);
+        //ledMode.setNumber(3);
       }
       else{
-        ledMode.setNumber(1);
+        //ledMode.setNumber(3);
       }
   }
 
@@ -54,15 +56,19 @@ public NetworkTableEntry ledMode = table.getEntry("ledMode");
   public double getDistance(){
     double theta = ((Constants.limelightAngle + getYOffset()) * Math.PI / 180);
 
-    return ((Constants.targetHeight - Constants.limelightHeight)/Math.tan(theta))-Constants.limelightOffset;
+    return (((Constants.targetHeight - Constants.limelightHeight)/Math.tan(theta))-Constants.limelightOffset);
 
   }
 
   public double calculateShooterSpeed(){
-    double speed = 0;
+    double speed = 0.0;
+    distance = getDistance();
+    distanceInFeet = distance/12.0;
+
+    double distanceSquared = distanceInFeet*distanceInFeet;
 
     if(getDistance()<=Constants.closeDistance){
-      speed = Math.round(getDistance()/12) + 40; // v = x + 40
+      speed = (0.694444)*(distanceSquared) + 40.0;
     }
 
     return speed/100;
