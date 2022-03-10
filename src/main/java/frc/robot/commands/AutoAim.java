@@ -42,7 +42,7 @@ public class AutoAim extends CommandBase {
     //vision.setLedOn(true);
     
     speed = vision.calculateShooterSpeed();
-    if(speed<=0.6){
+    if(speed<=0.58){
       shooter.setSpeed(speed);
 
     }
@@ -55,7 +55,8 @@ public class AutoAim extends CommandBase {
     //System.out.println(vision.distance);
 
     System.out.println(speed);
-    System.out.println(vision.distanceInFeet);
+    
+    System.out.println(vision.distance);
 
     error = vision.getXOffset();
     turnPower = kP*error;
