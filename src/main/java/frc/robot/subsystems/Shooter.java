@@ -22,7 +22,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-    SmartDashboard.putNumber("DB/Slider 0", speed);
+    if(speed!=0){
+      SmartDashboard.putNumber("DB/Slider 0", speed);
+
+    }
     m_shooter.set(speed);//feed -1 to 1
   }
 
@@ -32,10 +35,10 @@ public class Shooter extends SubsystemBase {
 
   public void setSpeedFromSlider(){
       double speed = SmartDashboard.getNumber("DB/Slider 0", 0.0);
-
-      if(speed>=0.55){
-        speed = 0;
-      }
+      System.out.println(speed);
+      //if(speed>=0.55){
+        //speed = 0;
+      //}
 
       m_shooter.set(speed);
   }
