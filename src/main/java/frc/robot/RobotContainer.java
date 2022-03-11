@@ -174,14 +174,11 @@ public class RobotContainer {
     button8.whenReleased(new SetHoodSpeed(hood, 0));
 
     JoystickButton button9 = new JoystickButton(joystick, 4);
-    button9.whenHeld(new SetHoodSpeed(hood, -0.5));
-    button9.whenReleased(new SetHoodSpeed(hood, 0));
+    
 
     JoystickButton button10 = new JoystickButton(joystick, 11); //set to 30%
-    //button10.whenPressed(new SetHoodPosition(hood, vision, m_drive, false));
 
     JoystickButton button14 = new JoystickButton(joystick, 12);
-    //button14.whenPressed(new SetHoodPosition(hood,vision, m_drive, true));
 
 
     JoystickButton button13 = new JoystickButton(joystick, 10); //set to 30%
