@@ -4,35 +4,43 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Vision;
 
 public class SetHoodPosition extends CommandBase {
 
   private Hood hood;
-  boolean bottom;
-  public SetHoodPosition(Hood h, boolean setToBottom) {
+  
+  //boolean bottom;
+  int hoodPosition;
+
+  public SetHoodPosition(Hood h) {
     hood = h;
-    bottom = setToBottom;
+   
+    //bottom = setToBottom;
+    
     addRequirements(h);
   }
-
+ 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(bottom){//go to bottom
-     
-      hood.setPWMValue(-0.25);
-   
-      } else {// go to top
-       hood.setPWMValue(0.25);
-     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    if(RobotContainer.hoodPosition==1){//go to top
+     
+      hood.setPWMValue(-0.4);
+   
+      } else if(RobotContainer.hoodPosition==0) {// go to bottom
+       hood.setPWMValue(0.4);
+     }
   }  
 
   // Called once the command ends or is interrupted.
@@ -46,11 +54,13 @@ public class SetHoodPosition extends CommandBase {
   public boolean isFinished() {
     boolean finished;
 
-    if(bottom){
+    if(RobotContainer.hoodPosition==1){
       finished = hood.getBottomLimitSwitch();
     }
-    else{
+    else if(RobotContainer.hoodPosition==0){
       finished = hood.getTopLimitSwitch();
+    } else {
+      finished = false;
     }
 
   

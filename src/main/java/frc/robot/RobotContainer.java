@@ -79,6 +79,7 @@ public class RobotContainer {
   public static Joystick joystick = new Joystick(Constants.joystickPort);
   public static XboxController xbox = new XboxController(Constants.xboxPort);
 
+  public static int hoodPosition;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -110,9 +111,9 @@ public class RobotContainer {
         intakeButton.whenHeld(new SetIntakeSpeed(m_intake, -0.2)); 
         intakeButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
 
-    JoystickButton ejectButton = new JoystickButton(joystick, 5);
-        ejectButton.whenHeld(new SetIntakeSpeed(m_intake, 0.1)); 
-        ejectButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
+  //  JoystickButton ejectButton = new JoystickButton(joystick, 5);
+       // ejectButton.whenHeld(new SetIntakeSpeed(m_intake, 0.1)); 
+       // ejectButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
 
   //Xbox Buttons
 
@@ -137,7 +138,10 @@ public class RobotContainer {
                                     ));                  
                                     
     JoystickButton autoAimButton = new JoystickButton(xbox, XboxController.Button.kB.value);//Automatic aiming
-        autoAimButton.whenHeld(new AutoAim(m_shooter, hood, vision, m_drive));
+        autoAimButton.whenHeld( new ParallelCommandGroup(
+          new AutoAim(m_shooter, vision, m_drive),
+          new SetHoodPosition(hood)
+        ));
     
     JoystickButton stopShooterButton = new JoystickButton(xbox, XboxController.Button.kStart.value);//Stop Shooter
         stopShooterButton.whenPressed( new ParallelCommandGroup(
@@ -174,10 +178,10 @@ public class RobotContainer {
     button9.whenReleased(new SetHoodSpeed(hood, 0));
 
     JoystickButton button10 = new JoystickButton(joystick, 11); //set to 30%
-    button10.whenPressed(new SetHoodPosition(hood, false));
+    //button10.whenPressed(new SetHoodPosition(hood, vision, m_drive, false));
 
     JoystickButton button14 = new JoystickButton(joystick, 12);
-      button14.whenPressed(new SetHoodPosition(hood, true));
+    //button14.whenPressed(new SetHoodPosition(hood,vision, m_drive, true));
 
 
     JoystickButton button13 = new JoystickButton(joystick, 10); //set to 30%

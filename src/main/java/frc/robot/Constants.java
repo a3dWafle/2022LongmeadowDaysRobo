@@ -46,8 +46,8 @@ public final class Constants {
     //Roborio Inputs - Sensors
 
         //Hood
-        public static int bottomLimitSwitch = 2;
-        public static int topLimitSwitch = 3;
+        public static int bottomLimitSwitch = 3;
+        public static int topLimitSwitch = 2;
 
         //Climb
         public static int leftLimitSwitch = 4;

@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Vision extends SubsystemBase {
 
@@ -23,6 +24,7 @@ public NetworkTableEntry ledMode = table.getEntry("ledMode");
 
 public double distanceInFeet;
 public double distance;
+public int hoodPosition;
 
   public Vision() {
       //ledMode.setNumber(3);//Set led off
@@ -75,6 +77,16 @@ public double distance;
     }
 
     return speed/100;
+  }
+
+  public void calculateHoodPosition(){//1 is bottom, 0 is halfway
+    distance = getDistance();
+    if(distance<Constants.closeDistance){
+       RobotContainer.hoodPosition = 0;
+    } else if(distance<=Constants.farDistance){
+      RobotContainer.hoodPosition = 1;
+    }
+
   }
 
   @Override
