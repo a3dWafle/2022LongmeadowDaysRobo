@@ -67,7 +67,7 @@ public class RobotContainer {
   public static JoystickButton HalfSpeedButton;
   
   //Default Commands
-  private final Autonomous m_autoCommand = new Autonomous(m_drive, feeder, m_shooter); //this used to be "fire."
+  private final Autonomous m_autoCommand = new Autonomous(m_drive, feeder, m_shooter, m_intake); 
   private final Fire fire = new Fire(feeder, m_shooter); //added this line after changing autoCommand
   private final JoystickDrive joystickDrive = new JoystickDrive(m_drive);
   private final GetDistance postLimelight = new GetDistance(vision);

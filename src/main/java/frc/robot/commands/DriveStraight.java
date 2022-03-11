@@ -14,11 +14,12 @@ public class DriveStraight extends CommandBase {
   double distance;
   double power;
   double encoderTurns;
+  double kP = 0.05;
+  double error;
 
-  public DriveStraight(DriveTrain m_drive, double p, double d) {
+  public DriveStraight(DriveTrain m_drive, double d) {
     drive = m_drive;
     distance = d;
-    power = p;
     addRequirements(m_drive);
   }
 
@@ -34,6 +35,19 @@ public class DriveStraight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    error = Math.abs(drive.getEncoder()) - Math.abs(encoderTurns);
+    power = -kP*error;
+
+    if(Math.abs(power) >= 0.35){
+      if(power>0){
+        power = 0.35;
+      } else {
+        power = -0.35;
+      }
+
+  }
+
+
     drive.driveStraight(power);
   }
 
