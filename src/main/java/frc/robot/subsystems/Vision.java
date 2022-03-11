@@ -69,7 +69,7 @@ public double distance;
     double distanceMinusFiveSquared = 1.11*1.11*(distanceInFeet - 5.0)*(distanceInFeet - 5.0);
 
     if(distance<Constants.closeDistance){
-      speed = (0.64)*(distanceSquared) + 40.0; // (4x/5)^2+40
+      speed = (0.5625)*(distanceSquared) + 40.0; // (4x/5)^2+40
     } else if(distance<=Constants.farDistance){
       speed = distanceMinusFiveSquared + 40; //(1.11(x-5))^2 + 40
     }
