@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
@@ -14,7 +15,6 @@ import frc.robot.subsystems.Vision;
 public class AutoAim extends CommandBase {
 
   private Shooter shooter;
-  private Hood hood;
   private Vision vision;
   private DriveTrain drive;
 
@@ -25,13 +25,11 @@ public class AutoAim extends CommandBase {
   //double area;
   double speed;
 
-  public AutoAim(Shooter m_shooter, Hood h, Vision v, DriveTrain m_drive) {
+  public AutoAim(Shooter m_shooter, Vision v, DriveTrain m_drive) {
     vision = v;
     shooter = m_shooter;
-    hood = h;
     drive = m_drive;
     addRequirements(m_shooter);
-    addRequirements(h);
     addRequirements(v);
     addRequirements(m_drive);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -40,6 +38,7 @@ public class AutoAim extends CommandBase {
   @Override
   public void initialize() {
     //vision.setLedOn(true);
+    vision.calculateHoodPosition();
     
     speed = vision.calculateShooterSpeed();
     if(speed<=0.58){
@@ -54,9 +53,11 @@ public class AutoAim extends CommandBase {
   public void execute() {
     //System.out.println(vision.distance);
 
-    System.out.println(speed);
+    System.out.println("Speed: " +speed);
     
-    System.out.println(vision.distance);
+    System.out.println("Distance in Inches: " + vision.distance);
+
+    System.out.println("Hood Position: " + RobotContainer.hoodPosition);
 
     error = vision.getXOffset();
     turnPower = kP*error;
