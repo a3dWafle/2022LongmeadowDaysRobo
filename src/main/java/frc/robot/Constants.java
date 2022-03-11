@@ -61,9 +61,9 @@ public final class Constants {
     //Robot constants
 
         //Drive train
-        public static double encoderTurnsPerRev = 11;//encoder turns
+        public static double encoderTurnsPerRev = 8.6;//encoder turns
         public static double encouderTurnsPer90 = 11.45;
-        public static double distancePerRev = 20.5;//inches
+        public static double distancePerRev = 14.5;//inches
 
         //Feeder
         public static int gateOffset = 5;//Degrees - How far off horizontal the gate servos are when closed

@@ -4,9 +4,11 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 
@@ -15,15 +17,19 @@ public class Autonomous extends SequentialCommandGroup {
   private DriveTrain d;
   private Feeder f;
   private Shooter s;
+  private Intake intake;
 
-  public Autonomous(DriveTrain drive, Feeder feed, Shooter shoot) {
+  public Autonomous(DriveTrain drive, Feeder feed, Shooter shoot, Intake i) {
     d = drive;
     f = feed;
+    intake = i;
     s = shoot;
+    addRequirements(drive, feed, shoot, i);
     
     addCommands(  
-    new DriveStraight(d, 0.4, 40) //as far as I know, this won't drive far enough. may be as simple as putting a loop
-    //in the driveStraight method, or just calling it multiple times here
+    new SetIntakeSpeed(intake, -0.2),
+    new DriveStraight(d, 100),
+    new SetIntakeSpeed(intake, 0)
     //new Turn(d),
     //new Fire(f, s)
     );
