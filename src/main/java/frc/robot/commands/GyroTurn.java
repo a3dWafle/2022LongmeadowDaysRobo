@@ -4,52 +4,51 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveStraight extends CommandBase {
-
+public class GyroTurn extends CommandBase {
+  /** Creates a new GyroTurn. */
   private DriveTrain drive;
-  double distance;
-  double power;
-  double encoderTurns;
-  double kP = 0.05;
-  double error;
 
-  public DriveStraight(DriveTrain m_drive, double d) {
+  double kP = 0.1;
+  double error;
+  double targetAngle;
+  double turnPower;
+
+  public GyroTurn(DriveTrain m_drive, double a) {
+    // Use addRequirements() here to declare subsystem dependencies.
     drive = m_drive;
-    distance = d;
+    targetAngle = a;
     addRequirements(m_drive);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     drive.resetGyro();
-    drive.resetEncoders();
-    encoderTurns = (distance*Constants.encoderTurnsPerRev)/Constants.distancePerRev;
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    error = Math.abs(drive.getEncoder()) - Math.abs(encoderTurns);
-    power = -kP*error;
+  public void execute(){
+    error = targetAngle - drive.getGyroAngle();
+    turnPower = kP*error;
 
-    if(Math.abs(power) >= 0.5){
-      if(power>0){
-        power = 0.5;
+    if(Math.abs(turnPower) >= 0.4){
+      if(turnPower>0){
+        turnPower = 0.4;
       } else {
-        power = -0.5;
+        turnPower = -0.4;
       }
+    }
 
-  }
+    drive.joystickDrive(turnPower, 0);
 
-
-    drive.driveStraight(power);
-  }
+  } 
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -60,6 +59,6 @@ public class DriveStraight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (encoderTurns - drive.getEncoder())<=5;
+    return (Math.abs(targetAngle) - Math.abs(drive.getGyroAngle()))<=3;
   }
 }
