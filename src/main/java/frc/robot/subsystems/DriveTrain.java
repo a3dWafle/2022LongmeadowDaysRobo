@@ -105,8 +105,17 @@ public class DriveTrain extends SubsystemBase {
 
   public void driveStraight(double power){
 
-      error = -gyro.getAngle();
-      double turnPower = kP*error;
+      error = gyro.getAngle();
+      double turnPower = -kP*error;
+
+      if(Math.abs(turnPower) >= 0.25){
+        if(turnPower>0){
+          turnPower = 0.25;
+        } else {
+          turnPower = -0.25;
+        }
+      }
+
       joystickDrive(turnPower, power);
 
   }
