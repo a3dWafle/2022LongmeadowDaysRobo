@@ -20,7 +20,7 @@ public class Sensors extends SubsystemBase {
 
 
   public Sensors() {
-    //CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
     //CameraServer.startAutomaticCapture();
 
   }
