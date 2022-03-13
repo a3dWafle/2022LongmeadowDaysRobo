@@ -111,9 +111,9 @@ public class RobotContainer {
         intakeButton.whenHeld(new SetIntakeSpeed(m_intake, -0.2)); 
         intakeButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
 
-  //  JoystickButton ejectButton = new JoystickButton(joystick, 5);
-       // ejectButton.whenHeld(new SetIntakeSpeed(m_intake, 0.1)); 
-       // ejectButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
+    JoystickButton ejectButton = new JoystickButton(joystick, 2);
+        ejectButton.whenHeld(new SetIntakeSpeed(m_intake, 0.1)); 
+         ejectButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
 
   //Xbox Buttons
 
