@@ -16,10 +16,12 @@ public class DriveStraight extends CommandBase {
   double encoderTurns;
   double kP = 0.05;
   double error;
+  boolean dropIntake;
 
-  public DriveStraight(DriveTrain m_drive, double d) {
+  public DriveStraight(DriveTrain m_drive, double d, boolean drop) {
     drive = m_drive;
     distance = d;
+    dropIntake = drop;
     addRequirements(m_drive);
   }
 
@@ -29,6 +31,7 @@ public class DriveStraight extends CommandBase {
     drive.resetGyro();
     drive.resetEncoders();
     encoderTurns = (distance*Constants.encoderTurnsPerRev)/Constants.distancePerRev;
+    drive.resetGyro();
 
   }
 
@@ -38,28 +41,59 @@ public class DriveStraight extends CommandBase {
     error = Math.abs(drive.getEncoder()) - Math.abs(encoderTurns);
     power = -kP*error;
 
-    if(Math.abs(power) >= 0.5){
+    if(Math.abs(power) >= 0.4){
       if(power>0){
-        power = 0.5;
+        power = 0.4;
       } else {
-        power = -0.5;
+        power = -0.4;
       }
+ 
+    }
+/*
+    if(Math.abs(power) <= 0.03){
+      if(power>0){
+        power = 0.03;
+      } else {
+        power = -0.03;
+      }
+ 
+    }
+*/
+  
 
+  error = drive.getGyroAngle();
+  double turnPower = -kP*error;
+
+  if(Math.abs(turnPower) >= 0.25){
+    if(turnPower>0){
+      turnPower = 0.25;
+    } else {
+      turnPower = -0.25;
+    }
   }
 
+  drive.joystickDrive(turnPower, power);
 
-    drive.driveStraight(power);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.joystickDrive(0, 0);
+    if(dropIntake){
+      drive.joystickDrive(0, -0.05);
+
+    } else {
+      drive.joystickDrive(0, 0);
+
+    }
+    //drive.joystickDrive(0, 0);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (encoderTurns - drive.getEncoder())<=5;
+    return (encoderTurns - drive.getEncoder())<=10;
   }
 }

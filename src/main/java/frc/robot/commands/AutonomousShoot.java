@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -37,12 +38,13 @@ public class AutonomousShoot extends CommandBase {
 
   @Override
   public void initialize() {
-    //vision.setLedOn(true);
+    vision.setLedOn(true);
+    Timer.delay(1);
     vision.calculateHoodPosition();
     
     speed = vision.calculateShooterSpeed();
     if(speed<=0.58){
-      shooter.setSpeed(speed);
+      //shooter.setSpeed(speed);
 
     }
     
@@ -58,7 +60,7 @@ public class AutonomousShoot extends CommandBase {
     System.out.println("Distance in Inches: " + vision.distance);
 
     System.out.println("Hood Position: " + RobotContainer.hoodPosition);
-
+/*
     error = vision.getXOffset();
     turnPower = kP*error;
 
@@ -76,17 +78,18 @@ public class AutonomousShoot extends CommandBase {
     }
     
     drive.joystickDrive(turnPower, 0);
+    */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //vision.setLedOn(false);
+    vision.setLedOn(false);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return vision.getXOffset()<=3;
+    return true;//vision.getXOffset()<=3;
   }
 }

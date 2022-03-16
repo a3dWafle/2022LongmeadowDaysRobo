@@ -68,14 +68,17 @@ public final class Constants {
         //Feeder
         public static int gateOffset = 5;//Degrees - How far off horizontal the gate servos are when closed
 
-        //Vision 
+        //Vision/Shooter 
         public static double targetHeight = 104; //inches
-        public static double limelightHeight = 18.5; //inches
-        public static double limelightOffset = 24; // inches from limelight to intake
+        public static double limelightHeight = 23; //inches
+        public static double limelightOffset = 22.5; // inches from limelight to intake
         public static double limelightAngle = 45;
 
-        public static double closeDistance = 48;
+        public static double closeDistance = 36;
+        public static double middleDistance = 81.6;
         public static double farDistance = 102;
+
+        public static double restingSpeed = 0.25;
 
 
 }

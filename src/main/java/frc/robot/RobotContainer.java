@@ -30,6 +30,7 @@ import frc.robot.commands.SetRightClimbSpeed;
 import frc.robot.commands.SetShooterSpeed;
 import frc.robot.commands.SetSpeedFromSlider;
 import frc.robot.commands.ToggleGate;
+import frc.robot.commands.ToggleRestingSpeed;
 import frc.robot.commands.TrackTarget;
 import frc.robot.commands.Turn;
 import frc.robot.subsystems.Climb;
@@ -121,6 +122,7 @@ public class RobotContainer {
     JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kX.value); //Release Balls
         fireButton.whenPressed(new Fire(feeder, m_shooter));
 
+
     JoystickButton closeLowButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Low shot next to hub
         closeLowButton.whenPressed(new SequentialCommandGroup(
                                    //new SetHoodPosition(hood, false),
@@ -132,8 +134,8 @@ public class RobotContainer {
         closeHighButton.whenPressed(new SequentialCommandGroup(
                                     //new SetHoodPosition(hood, true),
                                    // new WaitCommand(0.25),
-                                    //new SetShooterSpeed(m_shooter, 0.47)
-                                    new SetSpeedFromSlider(m_shooter)
+                                    new SetShooterSpeed(m_shooter, 0.40)
+                                    //new SetSpeedFromSlider(m_shooter)
                                     //new SetHoodPosition(hood, true)
                                     ));                  
                                     
@@ -143,9 +145,9 @@ public class RobotContainer {
           new SetHoodPosition(hood)
         ));
     
-    JoystickButton stopShooterButton = new JoystickButton(xbox, XboxController.Button.kStart.value);//Stop Shooter
-        stopShooterButton.whenPressed( new ParallelCommandGroup(
-                                      new SetShooterSpeed(m_shooter, 0),
+    JoystickButton toggleRestingSpeed = new JoystickButton(xbox, XboxController.Button.kStart.value);//Stop Shooter
+        toggleRestingSpeed.whenPressed( new ParallelCommandGroup(
+                                      new ToggleRestingSpeed(m_shooter),
                                       new ToggleGate(feeder, true)
                                       ));
 

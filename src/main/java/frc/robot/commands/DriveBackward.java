@@ -4,65 +4,41 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class GyroTurn extends CommandBase {
-  /** Creates a new GyroTurn. */
+public class DriveBackward extends CommandBase {
   private DriveTrain drive;
+  double distance;
 
-  double kP = 0.1;
-  double error;
-  double targetAngle;
-  double turnPower;
-
-  public GyroTurn(DriveTrain m_drive, double a) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public DriveBackward(DriveTrain m_drive, double d) {
     drive = m_drive;
-    targetAngle = a;
+    distance = d;
     addRequirements(m_drive);
-
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drive.resetGyro();
+    drive.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute(){
-    error = targetAngle - drive.getGyroAngle();
-    turnPower = kP*error;
-
-    if(Math.abs(turnPower) >= 0.4){
-      if(turnPower>0){
-        turnPower = 0.4;
-      } else {
-        turnPower = -0.4;
-      }
-    }
-
-    drive.joystickDrive(turnPower, 0);
-
-  } 
-  
+  public void execute() {
+    drive.joystickDrive(0, -0.1);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     drive.joystickDrive(0, 0);
-    drive.joystickDrive(0, 0);
-    drive.resetGyro();
-
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(targetAngle) - Math.abs(drive.getGyroAngle()))<=3;
+    return Math.abs(drive.getEncoder())>=5;
   }
 }
