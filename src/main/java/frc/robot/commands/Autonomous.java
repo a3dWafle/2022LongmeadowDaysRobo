@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import org.ejml.dense.row.decomposition.eig.WatchedDoubleStepQRDecomposition_DDRM;
+
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -32,15 +34,19 @@ public class Autonomous extends SequentialCommandGroup {
     addRequirements(drive, feed, shoot, i, vision);
     
     addCommands(  
-    new SetIntakeSpeed(i, -0.2),
-    new DriveStraight(d, 110),
+    //new SetIntakeSpeed(i, -0.2),
+    new DriveStraight(d, 30,true),
     new WaitCommand(0.5),
-    new SetIntakeSpeed(i, 0),
-    new GyroTurn(d, 175),
-    new DriveStraight(d, 55),
+    new DriveStraight(d, 50,false),
+
+    //new DriveStraight(d, 30),
+    //new SetIntakeSpeed(i, 0)
+    new GyroTurn(d, 170),
+    new DriveStraight(d, 60,false),
+    //new SetShooterSpeed(s, 0.25),
     new AutonomousShoot(s, v, d),
-    new WaitCommand(4),
-    new Fire(f, s)
+    new WaitCommand(2)
+    //new Fire(f, s)
 
     //new Fire(f, s)
     );

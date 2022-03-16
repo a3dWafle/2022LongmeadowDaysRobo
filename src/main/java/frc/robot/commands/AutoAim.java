@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -37,7 +38,8 @@ public class AutoAim extends CommandBase {
 
   @Override
   public void initialize() {
-    //vision.setLedOn(true);
+    vision.setLedOn(true);
+    Timer.delay(0.5);
     vision.calculateHoodPosition();
     
     speed = vision.calculateShooterSpeed();
@@ -53,35 +55,37 @@ public class AutoAim extends CommandBase {
   public void execute() {
     //System.out.println(vision.distance);
 
-    System.out.println("Speed: " +speed);
+    System.out.println("Speed: " + speed);
     
     System.out.println("Distance in Inches: " + vision.distance);
+
+    System.out.println("Angle: " + vision.theta);
 
     System.out.println("Hood Position: " + RobotContainer.hoodPosition);
 
     error = vision.getXOffset();
     turnPower = kP*error;
 
-    if(Math.abs(error)<0.25){
+    if(Math.abs(error)<0.15){
         turnPower = 0;
     }
 
-    if(Math.abs(turnPower) >= 0.25){
+    if(Math.abs(turnPower) >= 0.3){
         if(turnPower>0){
-          turnPower = 0.25;
+          turnPower = 0.3;
         } else {
-          turnPower = -0.25;
+          turnPower = -0.3;
         }
 
     }
     
     drive.joystickDrive(turnPower, 0);
   }
-
+;
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //vision.setLedOn(false);
+    vision.setLedOn(false);
   }
 
   // Returns true when the command should end.

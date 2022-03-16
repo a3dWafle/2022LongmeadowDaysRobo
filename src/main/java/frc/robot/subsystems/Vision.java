@@ -25,6 +25,7 @@ public NetworkTableEntry ledMode = table.getEntry("ledMode");
 public double distanceInFeet;
 public double distance;
 public int hoodPosition;
+public double theta;
 
   public Vision() {
       //ledMode.setNumber(3);//Set led off
@@ -32,10 +33,10 @@ public int hoodPosition;
 
   public void setLedOn(boolean on){
       if(on){
-        //ledMode.setNumber(3);
+        ledMode.setNumber(3);
       }
       else{
-        //ledMode.setNumber(3);
+        ledMode.setNumber(1);
       }
   }
 
@@ -56,7 +57,7 @@ public int hoodPosition;
   }
 
   public double getDistance(){
-    double theta = ((Constants.limelightAngle + getYOffset()) * Math.PI / 180);
+    theta = ((Constants.limelightAngle + getYOffset()) * Math.PI / 180);
 
     return (((Constants.targetHeight - Constants.limelightHeight)/Math.tan(theta))-Constants.limelightOffset);
 
@@ -67,13 +68,17 @@ public int hoodPosition;
     distance = getDistance();
     distanceInFeet = distance/12.0;
 
-    double distanceSquared = distanceInFeet*distanceInFeet;
-    double distanceMinusFiveSquared = 0.7*0.7*(distanceInFeet - 2.5)*(distanceInFeet - 2.5);
+    double closeCalc = 0.85*0.85*(distanceInFeet + 0.2)*(distanceInFeet + 0.2);
+    double middleCalc = 1.2*1.2*(distanceInFeet - 4.7)*(distanceInFeet - 4.7);
+    double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
 
     if(distance<Constants.closeDistance){
-      speed = (0.5625)*(distanceSquared) + 40.0; // (4x/5)^2+40
-    } else if(distance<=Constants.farDistance){
-      speed = distanceMinusFiveSquared + 36; 
+      speed = (closeCalc) + 40; // (4x/5)^2+40
+    } else if(distance<Constants.middleDistance){
+      speed = middleCalc + 42; 
+    }
+    else if(distance<=Constants.farDistance){
+      speed = 0;//farCalc + 45.7;
     }
 
     return speed/100;

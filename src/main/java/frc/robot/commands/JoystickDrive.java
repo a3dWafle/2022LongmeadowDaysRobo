@@ -49,7 +49,7 @@ public class JoystickDrive extends CommandBase {/*
     //}
     //System.out.println(Math.round(m_drive.getGyroAngle()));
    
-    m_drive.joystickDrive(turn/2.5, -move/1.5); //Halving the speed to increase control
+    m_drive.joystickDrive(turn/2, -move/1.25); //Halving the speed to increase control
     
   }
 

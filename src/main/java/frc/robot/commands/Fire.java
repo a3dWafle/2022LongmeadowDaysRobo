@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 
@@ -30,7 +31,9 @@ public class Fire extends SequentialCommandGroup {
 
       new ToggleGate(gate, true),
       //Reset Shooter
-      new SetShooterSpeed(shooter, 0)
+      new WaitCommand(1),
+
+      new SetShooterSpeed(shooter, Constants.restingSpeed)
     );
   }
 }
