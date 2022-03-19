@@ -41,9 +41,9 @@ public class DriveStraight extends CommandBase {
     error = Math.abs(drive.getEncoder()) - Math.abs(encoderTurns);
     power = -kP*error;
 
-    if(Math.abs(power) >= 0.4){
+    if(Math.abs(power) >= 0.45){
       if(power>0){
-        power = 0.4;
+        power = 0.45;
       } else {
         power = -0.4;
       }

@@ -73,9 +73,9 @@ public double theta;
     double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
 
     if(distance<Constants.closeDistance){
-      speed = (closeCalc) + 40; // (4x/5)^2+40
+      speed = (closeCalc) + 40.5; // (4x/5)^2+40
     } else if(distance<Constants.middleDistance){
-      speed = middleCalc + 42; 
+      speed = middleCalc + 41.5; 
     }
     else if(distance<=Constants.farDistance){
       speed = 0;//farCalc + 45.7;

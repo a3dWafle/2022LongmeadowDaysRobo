@@ -78,7 +78,7 @@ public final class Constants {
         public static double middleDistance = 81.6;
         public static double farDistance = 102;
 
-        public static double restingSpeed = 0.25;
+        public static double restingSpeed = 0.4;
 
 
 }
