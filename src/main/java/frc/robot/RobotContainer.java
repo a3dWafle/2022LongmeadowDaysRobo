@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoAim;
 import frc.robot.commands.Autonomous;
 import frc.robot.commands.CalibrateHood;
@@ -81,6 +82,7 @@ public class RobotContainer {
   public static XboxController xbox = new XboxController(Constants.xboxPort);
 
   public static int hoodPosition;
+  
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -94,6 +96,8 @@ public class RobotContainer {
     //sensors.setDefaultCommand(printColorSensor);
 
     m_shooter.setDefaultCommand(getShootSpeed);
+    
+
   }
 
   
@@ -119,18 +123,21 @@ public class RobotContainer {
   //Xbox Buttons
 
     //Shooting
-    JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kX.value); //Release Balls
+    JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Release Balls
         fireButton.whenPressed(new Fire(feeder, m_shooter));
 
 
-    JoystickButton closeLowButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Low shot next to hub
-        closeLowButton.whenPressed(new SequentialCommandGroup(
+    //JoystickButton closeLowButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Low shot next to hub
+      
+    /*    
+    closeLowButton.whenPressed(new SequentialCommandGroup(
                                    //new SetHoodPosition(hood, false),
                                    //new WaitCommand(0.25),
                                     new SetShooterSpeed(m_shooter, 0.3)
                                  ));
+                                 */
 
-    JoystickButton closeHighButton = new JoystickButton(xbox, XboxController.Button.kY.value);//High shot next to hub
+    JoystickButton closeHighButton = new JoystickButton(joystick, 4);//High shot next to hub
         closeHighButton.whenPressed(new SequentialCommandGroup(
                                     //new SetHoodPosition(hood, true),
                                    // new WaitCommand(0.25),
@@ -145,7 +152,7 @@ public class RobotContainer {
           new SetHoodPosition(hood)
         ));
     
-    JoystickButton toggleRestingSpeed = new JoystickButton(xbox, XboxController.Button.kStart.value);//Stop Shooter
+    JoystickButton toggleRestingSpeed = new JoystickButton(joystick, 6);//Stop Shooter
         toggleRestingSpeed.whenPressed( new ParallelCommandGroup(
                                       new ToggleRestingSpeed(m_shooter),
                                       new ToggleGate(feeder, true)
@@ -198,7 +205,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
 }

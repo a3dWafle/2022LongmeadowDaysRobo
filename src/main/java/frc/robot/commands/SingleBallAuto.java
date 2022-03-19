@@ -17,16 +17,15 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
 
-public class Autonomous extends SequentialCommandGroup {
+public class SingleBallAuto extends SequentialCommandGroup {
   
   private DriveTrain d;
   private Feeder f;
   private Shooter s;
   private Intake i;
   private Vision v;
-  public double speed;
 
-  public Autonomous(DriveTrain drive, Feeder feed, Shooter shoot, Intake intake, Vision vision) {
+  public SingleBallAuto(DriveTrain drive, Feeder feed, Shooter shoot, Intake intake, Vision vision) {
     d = drive;
     f = feed;
     i = intake;
@@ -35,20 +34,14 @@ public class Autonomous extends SequentialCommandGroup {
     addRequirements(drive, feed, shoot, i, vision);
     
     addCommands(  
-    new ToggleLimelightLED(v),
-    new ToggleGate(f, true),
     new DriveStraight(d, 30,true),
     new WaitCommand(0.5),
-    new SetIntakeSpeed(i, -0.2),
-    new DriveStraight(d, 60,false),
-    new ToggleGate(f, true),
-    new WaitCommand(1),
-    //new GyroTurn(d, 170),
-    new SetIntakeSpeed(i, 0)
-    //new DriveStraight(d, 60,false),
-    //new AutonomousShoot(s, v, d),
-    //new WaitCommand(2),
-    //new Fire(f, s)
+    new DriveStraight(d, 80,false),
+    new GyroTurn(d, 170),
+    new DriveStraight(d, 70,false),
+    new AutonomousShoot(s, v, d),
+    new WaitCommand(2),
+    new Fire(f, s)
 
     );
   }
