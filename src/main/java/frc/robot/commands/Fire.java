@@ -23,6 +23,12 @@ public class Fire extends SequentialCommandGroup {
     gate = feeder;
     shooter = m_shooter;
     addCommands(
+      new SetFeederSpeed(gate, -1),
+
+      new WaitCommand(1),
+
+      new SetFeederSpeed(gate, 0),
+      /*
       new ToggleGate(gate, true),
 
       new ToggleGate(gate, false),//Release balls
@@ -32,8 +38,8 @@ public class Fire extends SequentialCommandGroup {
       new ToggleGate(gate, true),
       //Reset Shooter
       new WaitCommand(1),
-
-      new SetShooterSpeed(shooter, Constants.restingSpeed)
+    */
+      new SetShooterSpeed(shooter, 0)//Constants.restingSpeed)
     );
   }
 }

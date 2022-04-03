@@ -7,11 +7,13 @@ package frc.robot.commands;
 import org.ejml.dense.row.decomposition.eig.WatchedDoubleStepQRDecomposition_DDRM;
 
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
@@ -24,29 +26,51 @@ public class Autonomous extends SequentialCommandGroup {
   private Shooter s;
   private Intake i;
   private Vision v;
+  private Hood h;
   public double speed;
 
-  public Autonomous(DriveTrain drive, Feeder feed, Shooter shoot, Intake intake, Vision vision) {
+  public Autonomous(DriveTrain drive, Feeder feed, Shooter shoot, Intake intake, Vision vision, Hood hood) {
     d = drive;
     f = feed;
     i = intake;
     s = shoot;
     v = vision;
-    addRequirements(drive, feed, shoot, i, vision);
+    h = hood;
+    addRequirements(drive, feed, shoot, i, vision, h);
     
     addCommands(  
-    new ToggleLimelightLED(v),
-    new ToggleGate(f, true),
+    new ToggleLimelightLED(v),   // Works
+    //new ToggleGate(f, true),
     new DriveStraight(d, 30,true),
     new WaitCommand(0.5),
-    new SetIntakeSpeed(i, -0.2),
+
+    new SetIntakeSpeed(i, -0.275),
     new DriveStraight(d, 60,false),
-    new ToggleGate(f, true),
+    //new ToggleGate(f, true),
     new WaitCommand(1),
-    //new GyroTurn(d, 170),
-    new SetIntakeSpeed(i, 0)
+    new SetIntakeSpeed(i, 0),
+
+    new GyroTurn(d, 170)
+
+    //new DriveStraight(d, 80,false)
+
+    /*
+    new SetShooterSpeed(s, 0.4),
+
+      new ParallelCommandGroup(
+       new AutonomousShoot(s, v, d),
+        new SetHoodPosition(h)
+      ),
+      new WaitCommand(2.5),
+
+      new Fire(f, s)
+*/
+
+    
     //new DriveStraight(d, 60,false),
+
     //new AutonomousShoot(s, v, d),
+
     //new WaitCommand(2),
     //new Fire(f, s)
 

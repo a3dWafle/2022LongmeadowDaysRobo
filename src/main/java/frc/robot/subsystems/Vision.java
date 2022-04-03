@@ -73,9 +73,30 @@ public double theta;
     double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
 
     if(distance<Constants.closeDistance){
-      speed = (closeCalc) + 40.5; // (4x/5)^2+40
+      speed = (closeCalc) + 40; // (4x/5)^2+40
     } else if(distance<Constants.middleDistance){
-      speed = middleCalc + 41.5; 
+      speed = middleCalc + 41; 
+    }
+    else if(distance<=Constants.farDistance){
+      speed = 0;//farCalc + 45.7;
+    }
+
+    return speed/100;
+  }
+
+  public double calculateAutoShooterSpeed(){
+    double speed = 0.0;
+    distance = getDistance();
+    distanceInFeet = distance/12.0;
+
+    double closeCalc = 0.85*0.85*(distanceInFeet + 0.2)*(distanceInFeet + 0.2);
+    double middleCalc = 1.2*1.2*(distanceInFeet - 4.7)*(distanceInFeet - 4.7);
+    double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
+
+    if(distance<Constants.closeDistance){
+      speed = (closeCalc) + 39; // (4x/5)^2+40
+    } else if(distance<Constants.middleDistance){
+      speed = middleCalc + 40; 
     }
     else if(distance<=Constants.farDistance){
       speed = 0;//farCalc + 45.7;

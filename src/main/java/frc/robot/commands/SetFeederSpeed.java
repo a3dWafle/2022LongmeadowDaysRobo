@@ -5,41 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Feeder;
 
-public class SetShooterSpeed extends CommandBase {
+public class SetFeederSpeed extends CommandBase {
 
-  private Shooter shooter;
+  private Feeder f;
   double speed;
 
-  public SetShooterSpeed(Shooter s, double spd) {
-    shooter = s;
-    speed = spd;
-    addRequirements(s);
+  public SetFeederSpeed(Feeder feeder, double s) {
+    f = feeder;
+    speed = s;
+    addRequirements(f);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    RobotContainer.hoodPosition = 1;
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setSpeed(speed);
+    f.setPWMSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
     return true;
   }
 }

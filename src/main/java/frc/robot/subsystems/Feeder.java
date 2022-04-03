@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -12,6 +13,8 @@ public class Feeder extends SubsystemBase {
   
   public Servo leftServo = new Servo(Constants.leftFeederServo);
   public Servo rightServo = new Servo(Constants.rightFeederServo);
+  public PWMVictorSPX m_feeder = new PWMVictorSPX(4);
+
 
   public Feeder() {}
 
@@ -26,6 +29,10 @@ public class Feeder extends SubsystemBase {
       rightServo.setAngle(80);
       leftServo.setAngle(100);
     }
+  }
+
+  public void setPWMSpeed(double speed){
+    m_feeder.set(speed);
   }
 
   @Override

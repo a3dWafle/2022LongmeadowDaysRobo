@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutoAim;
 import frc.robot.commands.Autonomous;
+import frc.robot.commands.AutonomousShoot;
 import frc.robot.commands.CalibrateHood;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.Fire;
 import frc.robot.commands.GetDistance;
 import frc.robot.commands.GetShootSpeed;
+import frc.robot.commands.GyroTurn;
 import frc.robot.commands.IncrementSpeed;
 import frc.robot.commands.JoystickDrive;
 import frc.robot.commands.PostLimelightValues;
@@ -23,6 +25,7 @@ import frc.robot.commands.PrintColorSensor;
 import frc.robot.commands.RaiseLeftHook;
 import frc.robot.commands.RaiseRightHook;
 import frc.robot.commands.SetBothHooksSpeed;
+import frc.robot.commands.SetFeederSpeed;
 import frc.robot.commands.SetHoodPosition;
 import frc.robot.commands.SetHoodSpeed;
 import frc.robot.commands.SetIntakeSpeed;
@@ -69,7 +72,7 @@ public class RobotContainer {
   public static JoystickButton HalfSpeedButton;
   
   //Default Commands
-  private final Autonomous m_autoCommand = new Autonomous(m_drive, feeder, m_shooter, m_intake, vision); 
+  private final Autonomous m_autoCommand = new Autonomous(m_drive, feeder, m_shooter, m_intake, vision, hood); 
   private final Fire fire = new Fire(feeder, m_shooter); //added this line after changing autoCommand
   private final JoystickDrive joystickDrive = new JoystickDrive(m_drive);
   private final GetDistance postLimelight = new GetDistance(vision);
@@ -113,7 +116,7 @@ public class RobotContainer {
 
     //Intake
     JoystickButton intakeButton = new JoystickButton(joystick, 1);
-        intakeButton.whenHeld(new SetIntakeSpeed(m_intake, -0.2)); 
+        intakeButton.whenHeld(new SetIntakeSpeed(m_intake, -0.275)); 
         intakeButton.whenReleased(new SetIntakeSpeed(m_intake, 0));
 
     JoystickButton ejectButton = new JoystickButton(joystick, 2);
@@ -125,6 +128,14 @@ public class RobotContainer {
     //Shooting
     JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Release Balls
         fireButton.whenPressed(new Fire(feeder, m_shooter));
+
+    JoystickButton lowShot = new JoystickButton(joystick, 11); //set to 30%
+    lowShot.whenPressed(new SetShooterSpeed(m_shooter, 0.35));
+    /*
+      lowShot.whenPressed(new ParallelCommandGroup(
+        new SetShooterSpeed(m_shooter, 0.31),
+        new SetHoodPosition(hood)
+      )) ; 
 
 
     //JoystickButton closeLowButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Low shot next to hub
@@ -141,8 +152,8 @@ public class RobotContainer {
         closeHighButton.whenPressed(new SequentialCommandGroup(
                                     //new SetHoodPosition(hood, true),
                                    // new WaitCommand(0.25),
-                                    new SetShooterSpeed(m_shooter, 0.40)
-                                    //new SetSpeedFromSlider(m_shooter)
+                                    //new SetShooterSpeed(m_shooter, 0.40)
+                                    new SetSpeedFromSlider(m_shooter)
                                     //new SetHoodPosition(hood, true)
                                     ));                  
                                     
@@ -182,21 +193,44 @@ public class RobotContainer {
     button8.whenHeld(new SetHoodSpeed(hood, 0.5));
     button8.whenReleased(new SetHoodSpeed(hood, 0));
 
-    JoystickButton button9 = new JoystickButton(joystick, 4);
+    JoystickButton button = new JoystickButton(joystick, 5);
+    button.whenHeld(new SetHoodSpeed(hood, -0.5));
+    button.whenReleased(new SetHoodSpeed(hood, 0));
+
+    JoystickButton button9 = new JoystickButton(joystick, 10);
+    button9.whenPressed(new AutonomousShoot(m_shooter, vision, m_drive));
+
     
 
-    JoystickButton button10 = new JoystickButton(joystick, 11); //set to 30%
 
     JoystickButton button14 = new JoystickButton(joystick, 12);
+    button14.whenPressed(new SetFeederSpeed(feeder, -1));
+    button14.whenReleased(new SetFeederSpeed(feeder, 0));
+    /*
+    button14.whenPressed(new SequentialCommandGroup(
+      
+    new GyroTurn(m_drive, 180),
+    new SetShooterSpeed(m_shooter, 0.4),
 
+      new ParallelCommandGroup(
+       new AutonomousShoot(m_shooter, vision, m_drive),
+        new SetHoodPosition(hood)
+      ),
+      new WaitCommand(2.5),
 
+      new Fire(feeder, m_shooter)
+    
+    ));
+
+    /*
     JoystickButton button13 = new JoystickButton(joystick, 10); //set to 30%
     button13.whenPressed(new SequentialCommandGroup(
                           new RaiseLeftHook(climb),
 
                           new RaiseRightHook(climb)
     ) );
-   
+   */
+
   }
 
   /**
