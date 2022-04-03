@@ -37,11 +37,11 @@ public class GyroTurn extends CommandBase {
     error = targetAngle - drive.getGyroAngle();
     turnPower = kP*error;
 
-    if(Math.abs(turnPower) >= 0.4){
+    if(Math.abs(turnPower) >= 0.35){
       if(turnPower>0){
-        turnPower = 0.4;
+        turnPower = 0.35;
       } else {
-        turnPower = -0.4;
+        turnPower = -0.35;
       }
     }
 
@@ -63,6 +63,6 @@ public class GyroTurn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(targetAngle) - Math.abs(drive.getGyroAngle()))<=3;
+    return (Math.abs(targetAngle) - Math.abs(drive.getGyroAngle()))<=4;
   }
 }

@@ -42,7 +42,7 @@ public class AutoAim extends CommandBase {
     Timer.delay(0.5);
     vision.calculateHoodPosition();
     
-    speed = vision.calculateShooterSpeed();
+    speed = vision.calculateAutoShooterSpeed();
     if(speed<=0.58){
       shooter.setSpeed(speed);
 

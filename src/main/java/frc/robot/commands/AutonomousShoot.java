@@ -38,12 +38,12 @@ public class AutonomousShoot extends CommandBase {
 
   @Override
   public void initialize() {
-    //vision.setLedOn(true);
+    vision.setLedOn(true);
     //Timer.delay(1);
     vision.calculateHoodPosition();
     
-    speed = vision.calculateShooterSpeed();
-    if(speed<=0.58){
+    speed = vision.calculateAutoShooterSpeed();
+    if(speed<=0.55){
     shooter.setSpeed(speed);
 
     } else {
@@ -59,11 +59,11 @@ public class AutonomousShoot extends CommandBase {
   public void execute() {
     //System.out.println(vision.distance);
 
-    System.out.println("Speed: " + speed);
+    //System.out.println("Speed: " + speed);
     
-    System.out.println("Distance in Inches: " + vision.distance);
+    //System.out.println("Distance in Inches: " + vision.distance);
 
-    System.out.println("Hood Position: " + RobotContainer.hoodPosition);
+    //System.out.println("Hood Position: " + RobotContainer.hoodPosition);
 
     error = vision.getXOffset();
     turnPower = kP*error;
@@ -100,6 +100,6 @@ public class AutonomousShoot extends CommandBase {
   @Override
   public boolean isFinished() {
     shooter.setSpeed(speed);
-    return vision.getXOffset()<=3;
+    return vision.getXOffset()<=5;
   }
 }
