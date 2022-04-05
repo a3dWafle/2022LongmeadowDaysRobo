@@ -74,9 +74,9 @@ public final class Constants {
         public static double limelightOffset = 22.5; // inches from limelight to intake
         public static double limelightAngle = 45;
 
-        public static double closeDistance = 36;
-        public static double middleDistance = 81.6;
-        public static double farDistance = 102;
+        public static double closeDistance = 60;
+        public static double middleDistance = 70;//76;//81.6;
+        public static double farDistance = 96;//102;
 
         public static double restingSpeed = 0.4;
 

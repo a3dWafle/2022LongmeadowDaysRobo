@@ -53,6 +53,7 @@ public double theta;
   }
 
   public double getValidTarget(){
+
     return tv.getDouble(0.0);
   }
 
@@ -70,16 +71,25 @@ public double theta;
 
     double closeCalc = 0.85*0.85*(distanceInFeet + 0.2)*(distanceInFeet + 0.2);
     double middleCalc = 1.2*1.2*(distanceInFeet - 4.7)*(distanceInFeet - 4.7);
-    double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
+    double farCalc = 0.07*distance;
 
-    if(distance<Constants.closeDistance){
-      speed = (closeCalc) + 40; // (4x/5)^2+40
-    } else if(distance<Constants.middleDistance){
-      speed = middleCalc + 41; 
+    if(distance < Constants.middleDistance && distance > Constants.closeDistance){
+      speed = farCalc + 44;
     }
+    else if(distance < Constants.farDistance && distance >= Constants.middleDistance){
+      speed = farCalc + 43;
+    }
+
+    /*
+    if(distance<Constants.closeDistance){
+      speed = 0;//(closeCalc) + 40; // (4x/5)^2+40
+    } else if(distance<Constants.middleDistance){
+      speed = farCalc + 49.3;
+        }
     else if(distance<=Constants.farDistance){
       speed = 0;//farCalc + 45.7;
     }
+    */
 
     return speed/100;
   }
