@@ -25,9 +25,9 @@ public class Fire extends SequentialCommandGroup {
     addCommands(
       new SetFeederSpeed(gate, -1),
 
-      new WaitCommand(1),
+      new WaitCommand(1.5),
 
-      new SetFeederSpeed(gate, 0),
+      new SetFeederSpeed(gate, 0)
       /*
       new ToggleGate(gate, true),
 
@@ -37,9 +37,9 @@ public class Fire extends SequentialCommandGroup {
 
       new ToggleGate(gate, true),
       //Reset Shooter
-      new WaitCommand(1),
+      new WaitCommand(1)
     */
-      new SetShooterSpeed(shooter, 0)//Constants.restingSpeed)
+      //new SetShooterSpeed(shooter, 0)//Constants.restingSpeed)
     );
   }
 }

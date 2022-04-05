@@ -69,7 +69,6 @@ public class RobotContainer {
   private final Sensors sensors = new Sensors();
   private final Climb climb = new Climb();
 
-  public static JoystickButton HalfSpeedButton;
   
   //Default Commands
   private final Autonomous m_autoCommand = new Autonomous(m_drive, feeder, m_shooter, m_intake, vision, hood); 
@@ -126,10 +125,10 @@ public class RobotContainer {
   //Xbox Buttons
 
     //Shooting
-    JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kA.value); //Release Balls
+    JoystickButton fireButton = new JoystickButton(xbox, XboxController.Button.kY.value); //Release Balls
         fireButton.whenPressed(new Fire(feeder, m_shooter));
 
-    JoystickButton lowShot = new JoystickButton(joystick, 11); //set to 30%
+    JoystickButton lowShot = new JoystickButton(xbox, XboxController.Button.kA.value); //set to 30%
     lowShot.whenPressed(new SetShooterSpeed(m_shooter, 0.35));
     /*
       lowShot.whenPressed(new ParallelCommandGroup(
@@ -159,17 +158,20 @@ public class RobotContainer {
                                     
     JoystickButton autoAimButton = new JoystickButton(xbox, XboxController.Button.kB.value);//Automatic aiming
         autoAimButton.whenHeld( new ParallelCommandGroup(
-          new AutoAim(m_shooter, vision, m_drive),
-          new SetHoodPosition(hood)
+          new AutoAim(m_shooter, vision, m_drive)
+          //new SetHoodPosition(hood)
         ));
     
+        
     JoystickButton toggleRestingSpeed = new JoystickButton(joystick, 6);//Stop Shooter
         toggleRestingSpeed.whenPressed( new ParallelCommandGroup(
                                       new ToggleRestingSpeed(m_shooter),
                                       new ToggleGate(feeder, true)
                                       ));
-
-
+      
+     JoystickButton stopShooter = new JoystickButton(xbox, XboxController.Button.kX.value);//Stop Shooter
+      stopShooter.whenPressed(new ToggleRestingSpeed(m_shooter));
+  
     
 
 

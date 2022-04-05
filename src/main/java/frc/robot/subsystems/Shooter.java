@@ -35,7 +35,6 @@ public class Shooter extends SubsystemBase {
 
   public void setSpeedFromSlider(){
       double speed = SmartDashboard.getNumber("DB/Slider 0", 0.0);
-      System.out.println(speed);
       //if(speed>=0.55){
         //speed = 0;
       //}

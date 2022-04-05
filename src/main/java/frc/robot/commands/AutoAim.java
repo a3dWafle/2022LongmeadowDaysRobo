@@ -38,11 +38,11 @@ public class AutoAim extends CommandBase {
 
   @Override
   public void initialize() {
-    vision.setLedOn(true);
+    //vision.setLedOn(true);
     Timer.delay(0.5);
     vision.calculateHoodPosition();
     
-    speed = vision.calculateAutoShooterSpeed();
+    speed = vision.calculateShooterSpeed();
     if(speed<=0.58){
       shooter.setSpeed(speed);
 
@@ -54,15 +54,15 @@ public class AutoAim extends CommandBase {
   @Override
   public void execute() {
     //System.out.println(vision.distance);
-
+    
     System.out.println("Speed: " + speed);
     
     System.out.println("Distance in Inches: " + vision.distance);
-
+/*
     System.out.println("Angle: " + vision.theta);
 
     System.out.println("Hood Position: " + RobotContainer.hoodPosition);
-
+    */
     error = vision.getXOffset();
     turnPower = kP*error;
 
