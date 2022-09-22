@@ -33,10 +33,10 @@ import frc.robot.commands.SetLeftClimbSpeed;
 import frc.robot.commands.SetRightClimbSpeed;
 import frc.robot.commands.SetShooterSpeed;
 import frc.robot.commands.SetSpeedFromSlider;
+import frc.robot.commands.SetTurnSpeed;
 import frc.robot.commands.ToggleGate;
 import frc.robot.commands.ToggleRestingSpeed;
 import frc.robot.commands.TrackTarget;
-import frc.robot.commands.Turn;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Feeder;
@@ -147,7 +147,7 @@ public class RobotContainer {
                                  ));
                                  */
 
-    JoystickButton closeHighButton = new JoystickButton(joystick, 4);//High shot next to hub
+    JoystickButton closeHighButton = new JoystickButton(joystick, 5);//High shot next to hub
         closeHighButton.whenPressed(new SequentialCommandGroup(
                                     //new SetHoodPosition(hood, true),
                                    // new WaitCommand(0.25),
@@ -179,11 +179,11 @@ public class RobotContainer {
 
 
     JoystickButton button3= new JoystickButton(xbox, XboxController.Button.kLeftBumper.value);
-    button3.whenHeld(new SetBothHooksSpeed(climb, -0.3));
+    button3.whenHeld(new SetBothHooksSpeed(climb, 0.3));
     button3.whenReleased(new SetBothHooksSpeed(climb, 0));
 
     JoystickButton button4= new JoystickButton(xbox, XboxController.Button.kRightBumper.value);
-    button4.whenHeld(new SetBothHooksSpeed(climb, 0.3));
+    button4.whenHeld(new SetBothHooksSpeed(climb, -0.3));
     button4.whenReleased(new SetBothHooksSpeed(climb, 0));
     
 
@@ -191,14 +191,20 @@ public class RobotContainer {
     //JoystickButton button7 = new JoystickButton(joystick, 6);
     //button7.whenPressed(new ToggleHood(hood));
 
-    JoystickButton button8 = new JoystickButton(joystick, 3);
+    JoystickButton trimLeft = new JoystickButton(joystick, 3);
+    trimLeft.whenHeld(new SetTurnSpeed(m_drive, -0.25));
+    /*
     button8.whenHeld(new SetHoodSpeed(hood, 0.5));
     button8.whenReleased(new SetHoodSpeed(hood, 0));
+    */
 
-    JoystickButton button = new JoystickButton(joystick, 5);
+    JoystickButton trimRight = new JoystickButton(joystick, 4);
+    trimRight.whenHeld(new SetTurnSpeed(m_drive, 0.25));
+
+    /*
     button.whenHeld(new SetHoodSpeed(hood, -0.5));
     button.whenReleased(new SetHoodSpeed(hood, 0));
-
+    */
     JoystickButton button9 = new JoystickButton(joystick, 10);
     button9.whenPressed(new AutonomousShoot(m_shooter, vision, m_drive));
 

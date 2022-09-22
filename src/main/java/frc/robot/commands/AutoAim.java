@@ -40,10 +40,11 @@ public class AutoAim extends CommandBase {
   public void initialize() {
     //vision.setLedOn(true);
     Timer.delay(0.5);
-    vision.calculateHoodPosition();
+    vision.calculateHoodPosition(); //USe distance calculation to set hood position(0 or 1)
+                                    //References global variable hoodPosition in RobotContainer
     
-    speed = vision.calculateShooterSpeed();
-    if(speed<=0.58){
+    speed = vision.calculateShooterSpeed();//Reference distance for shooting speed
+    if(speed<=0.58){//Make sure speed is under 58 percent
       shooter.setSpeed(speed);
 
     }
@@ -63,7 +64,7 @@ public class AutoAim extends CommandBase {
 
     System.out.println("Hood Position: " + RobotContainer.hoodPosition);
     */
-    error = vision.getXOffset();
+    error = vision.getXOffset();    //Tracking tape with proportional loop
     turnPower = kP*error;
 
     if(Math.abs(error)<0.15){
@@ -90,7 +91,7 @@ public class AutoAim extends CommandBase {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    return false;
+  public boolean isFinished() { //Ends when button is released
+    return false; 
   }
 }

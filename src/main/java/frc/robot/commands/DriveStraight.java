@@ -45,7 +45,7 @@ public class DriveStraight extends CommandBase {
       if(power>0){
         power = 0.45;
       } else {
-        power = -0.4;
+        power = -0.45;
       }
  
     }

@@ -74,10 +74,10 @@ public double theta;
     double farCalc = 0.07*distance;
 
     if(distance < Constants.middleDistance && distance > Constants.closeDistance){
-      speed = farCalc + 44;
+      speed = farCalc + 43.7;
     }
     else if(distance < Constants.farDistance && distance >= Constants.middleDistance){
-      speed = farCalc + 43;
+      speed = farCalc + 41;
     }
 
     /*
@@ -101,16 +101,15 @@ public double theta;
 
     double closeCalc = 0.85*0.85*(distanceInFeet + 0.2)*(distanceInFeet + 0.2);
     double middleCalc = 1.2*1.2*(distanceInFeet - 4.7)*(distanceInFeet - 4.7);
-    double farCalc = 2.1*2.1*(distanceInFeet - 6.8)*(distanceInFeet - 6.8);
+    double farCalc = 0.07*distance;
 
-    if(distance<Constants.closeDistance){
-      speed = (closeCalc) + 39; // (4x/5)^2+40
-    } else if(distance<Constants.middleDistance){
-      speed = middleCalc + 40; 
+    if(distance < Constants.middleDistance && distance > Constants.closeDistance){
+      speed = farCalc + 44.3;
     }
-    else if(distance<=Constants.farDistance){
-      speed = 0;//farCalc + 45.7;
+    else if(distance < Constants.farDistance && distance >= Constants.middleDistance){
+      speed = farCalc + 43.7;
     }
+
 
     return speed/100;
   }
